@@ -3,12 +3,11 @@ import {
   Inject,
   Injectable,
   NotAcceptableException,
-  UnauthorizedException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
-import { User } from 'typing';
+import { AccessToken, User } from 'typing';
 
 @Injectable()
 export class AuthService {
@@ -33,7 +32,7 @@ export class AuthService {
     return null;
   }
 
-  async login(user: User): Promise<any> {
+  async login(user: User): Promise<AccessToken> {
     const payload = { email: user.email, userId: user._id };
     return {
       access_token: this.jwtService.sign(payload),
