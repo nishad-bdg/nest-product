@@ -9,8 +9,9 @@ export interface User extends Mongoose.Document {
 export interface Category extends Mongoose.Document {
   _id: string;
   categoryName: string;
+  discount: number;
 }
 
 export interface AccessToken {
-  access_token: string
+  access_token: string;
 }

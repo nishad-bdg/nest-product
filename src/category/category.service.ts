@@ -12,7 +12,11 @@ export class CategoryService {
 
   async createCategory(createCategoryDto: CreateCategoryDto) {
     const newCategory = new this.categoryModel(createCategoryDto);
-    newCategory.save();
+    try {
+      await newCategory.save();
+    } catch (error) {
+      console.log(error);
+    }
     return newCategory;
   }
 
