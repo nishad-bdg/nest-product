@@ -18,7 +18,6 @@ export class CategoryService {
 
   async getCategory(id: string): Promise<Category> {
     const category = await this.categoryModel.findById(id);
-    console.log('category', category);
     return category;
   }
 

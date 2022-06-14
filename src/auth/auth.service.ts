@@ -2,6 +2,7 @@ import {
   forwardRef,
   Inject,
   Injectable,
+  NotAcceptableException,
   UnauthorizedException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
@@ -17,17 +18,19 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.userService.getUser(email);
-    if (user) {
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (isMatch) {
-        const { password, ...result } = user;
-        return result;
-      }
-      throw new UnauthorizedException('Password not matched');
+  async validateUser(username: string, password: string): Promise<User> {
+    const user = await this.userService.getUser(username);
+    const passwordValid = await bcrypt.compare(password, user.password);
+    if (!user) {
+      throw new NotAcceptableException('could not find the user');
     }
-    throw new UnauthorizedException('Email address not matched');
+    if (user && passwordValid) {
+      return {
+        _id: user._id,
+        email: user.email,
+      };
+    }
+    return null;
   }
 
   async login(user: User): Promise<any> {
