@@ -5,13 +5,13 @@ import { User } from 'typing';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
-import saltRound from '../constants/index'
+import saltRound from '../constants/index';
 
 @Injectable()
 export class UserService {
   constructor(@InjectModel('user') private readonly userModel: Model<User>) {}
 
-  async createUser(createUserDto: CreateUserDto) {
+  async createUser(createUserDto: CreateUserDto): Promise<User> {
     const hash = await bcrypt.hash(createUserDto.password, Number(saltRound));
     createUserDto.email = createUserDto.email.toLowerCase();
     createUserDto.password = hash;
@@ -20,19 +20,9 @@ export class UserService {
     return newUser;
   }
 
-  findAll() {
-    return `This action returns all user`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
-
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async getUser(email: string): Promise<User> {
+    const emailData = email.toLowerCase();
+    const user = await this.userModel.findOne({ emailData });
+    return user;
   }
 }
