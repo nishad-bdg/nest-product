@@ -5,3 +5,8 @@ export interface User extends Mongoose.Document {
   email: string;
   password: string;
 }
+
+export interface Category extends Mongoose.Document {
+  _id: string;
+  categoryName: string;
+}
