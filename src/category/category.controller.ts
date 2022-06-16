@@ -16,10 +16,10 @@ export class CategoryController {
     return await this.categoryService.getCategory(id);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.categoryService.findAll();
-  // }
+  @Get()
+  async findAll(): Promise<Category[]> {
+    return await this.categoryService.findAll();
+  }
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {

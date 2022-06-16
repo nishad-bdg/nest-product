@@ -15,3 +15,10 @@ export interface Category extends Mongoose.Document {
 export interface AccessToken {
   access_token: string;
 }
+
+export interface ProductCategory extends Mongoose.Document {
+  _id: string;
+  category: string;
+  productCategoryName: string;
+  discount: number;
+}
