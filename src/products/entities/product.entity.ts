@@ -1,4 +1,4 @@
-import { Schema, Prop } from '@nestjs/mongoose';
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { ProductCategory } from 'src/product-category/entities/product-category.entity';
 
@@ -23,3 +23,5 @@ export class Product {
   @Prop({ required: true })
   discount: number;
 }
+
+export const ProductSchema = SchemaFactory.createForClass(Product);

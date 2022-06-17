@@ -22,3 +22,12 @@ export interface ProductCategory extends Mongoose.Document {
   productCategoryName: string;
   discount: number;
 }
+
+export interface Product extends Mongoose.Document {
+  _id: string;
+  productCategory: string;
+  productName: string;
+  productDetail: string;
+  price: number;
+  discount: number;
+}
